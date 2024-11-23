@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symulator Procesora 8086</title>
+</head>
+<body>
+    <h1>Symulator Procesora 8086</h1>
+    
+    <div>
+        <label for="regAX">Rejestr AX:</label>
+        <input id="regAX" type="text" placeholder="Wprowadź wartość HEX">
+    </div>
+    <div>
+        <label for="regBX">Rejestr BX:</label>
+        <input id="regBX" type="text" placeholder="Wprowadź wartość HEX">
+    </div>
+    <div>
+        <label for="regCX">Rejestr CX:</label>
+        <input id="regCX" type="text" placeholder="Wprowadź wartość HEX">
+    </div>
+    <div>
+        <label for="regDX">Rejestr DX:</label>
+        <input id="regDX" type="text" placeholder="Wprowadź wartość HEX">
+    </div>
+    
+    <div>
+        <h2>Symulacja instrukcji MOV</h2>
+        <button onclick="mov('AX', 'BX')">MOV AX, BX</button>
+        <button onclick="mov('AX', 'CX')">MOV AX, CX</button>
+        <button onclick="mov('AX', 'DX')">MOV AX, DX</button>
+        <button onclick="mov('BX', 'AX')">MOV BX, AX</button>
+        <button onclick="mov('BX', 'CX')">MOV BX, CX</button>
+        <button onclick="mov('BX', 'DX')">MOV BX, DX</button>
+        <button onclick="mov('CX', 'AX')">MOV CX, AX</button>
+        <button onclick="mov('CX', 'BX')">MOV CX, BX</button>
+        <button onclick="mov('CX', 'DX')">MOV CX, DX</button>
+        <button onclick="mov('DX', 'AX')">MOV DX, AX</button>
+        <button onclick="mov('DX', 'BX')">MOV DX, BX</button>
+        <button onclick="mov('DX', 'CX')">MOV DX, CX</button>
+    </div>
+    
+    <div>
+        <h2>Symulacja instrukcji XCHG</h2>
+        <button onclick="xchg('AX', 'BX')">XCHG AX, BX</button>
+        <button onclick="xchg('AX', 'CX')">XCHG AX, CX</button>
+        <button onclick="xchg('AX', 'DX')">XCHG AX, DX</button>
+        <button onclick="xchg('BX', 'AX')">XCHG BX, AX</button>
+        <button onclick="xchg('BX', 'CX')">XCHG BX, CX</button>
+        <button onclick="xchg('BX', 'DX')">XCHG BX, DX</button>
+        <button onclick="xchg('CX', 'AX')">XCHG CX, AX</button>
+        <button onclick="xchg('CX', 'BX')">XCHG CX, BX</button>
+        <button onclick="xchg('CX', 'DX')">XCHG CX, DX</button>
+        <button onclick="xchg('DX', 'AX')">XCHG DX, AX</button>
+        <button onclick="xchg('DX', 'BX')">XCHG DX, BX</button>
+        <button onclick="xchg('DX', 'CX')">XCHG DX, CX</button>
+    </div>
+    
+    <div>
+        <button onclick="resetRegisters()">Resetuj Rejestry</button>
+    </div>
+    
+    <script>
+        function mov(from, to) {
+            // Implementacja logiki MOV
+        }
+        
+        function xchg(reg1, reg2) {
+            // Implementacja logiki XCHG
+        }
+        
+        function resetRegisters() {
+            document.getElementById('regAX').value = '';
+            document.getElementById('regBX').value = '';
+            document.getElementById('regCX').value = '';
+            document.getElementById('regDX').value = '';
+        }
+    </script>
+</body>
+</html>

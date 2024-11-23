@@ -63,11 +63,15 @@
     
     <script>
         function mov(from, to) {
-            // Implementacja logiki MOV
+            const fromValue = document.getElementById(`reg${from}`).value;
+            document.getElementById(`reg${to}`).value = fromValue;
         }
-        
+
         function xchg(reg1, reg2) {
-            // Implementacja logiki XCHG
+            const reg1Value = document.getElementById(`reg${reg1}`).value;
+            const reg2Value = document.getElementById(`reg${reg2}`).value;
+            document.getElementById(`reg${reg1}`).value = reg2Value;
+            document.getElementById(`reg${reg2}`).value = reg1Value;
         }
         
         function resetRegisters() {

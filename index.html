@@ -8,52 +8,49 @@
         .error {
             border: 2px solid red;
         }
-        .hex-input::after {
-            content: 'h';
-        }
     </style>
 </head>
 <body>
     <h1>Symulator Procesora 8086</h1>
     <div>
         <label for="regAX">Rejestr AX:</label>
-        <input class="hex-input" id="regAX" type="text" placeholder="Wprowadź wartość HEX" onblur="validateHexInput(this)" maxlength="4">
+        <input id="regAX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
     </div>
     <div>
         <label for="regBX">Rejestr BX:</label>
-        <input class="hex-input" id="regBX" type="text" placeholder="Wprowadź wartość HEX" onblur="validateHexInput(this)" maxlength="4">
+        <input id="regBX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
     </div>
     <div>
         <label for="regCX">Rejestr CX:</label>
-        <input class="hex-input" id="regCX" type="text" placeholder="Wprowadź wartość HEX" onblur="validateHexInput(this)" maxlength="4">
+        <input id="regCX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
     </div>
     <div>
         <label for="regDX">Rejestr DX:</label>
-        <input class="hex-input" id="regDX" type="text" placeholder="Wprowadź wartość HEX" onblur="validateHexInput(this)" maxlength="4">
+        <input id="regDX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
     </div>
     <div>
         <label for="regBP">Rejestr BP:</label>
-        <input class="hex-input" id="regBP" type="text" placeholder="Wprowadź wartość HEX" onblur="validateHexInput(this)" maxlength="4">
+        <input id="regBP" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
     </div>
     <div>
         <label for="regDI">Rejestr DI:</label>
-        <input class="hex-input" id="regDI" type="text" placeholder="Wprowadź wartość HEX" onblur="validateHexInput(this)" maxlength="4">
+        <input id="regDI" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
     </div>
     <div>
         <label for="regSI">Rejestr SI:</label>
-        <input class="hex-input" id="regSI" type="text" placeholder="Wprowadź wartość HEX" onblur="validateHexInput(this)" maxlength="4">
+        <input id="regSI" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
     </div>
     <div>
         <label for="offset">Offset:</label>
-        <input class="hex-input" id="offset" type="text" placeholder="Wprowadź wartość HEX" onblur="validateHexInput(this)" maxlength="4">
+        <input id="offset" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
     </div>
     <div>
         <label for="memoryAddress">Adres pamięci:</label>
-        <input class="hex-input" id="memoryAddress" type="text" placeholder="Wprowadź adres HEX" onblur="validateHexInput(this)" maxlength="4">
+        <input id="memoryAddress" type="text" placeholder="Wprowadź adres HEX" maxlength="4" readonly>
     </div>
     <div>
         <label for="memoryValue">Wartość pamięci:</label>
-        <input class="hex-input" id="memoryValue" type="text" placeholder="Wprowadź wartość HEX" onblur="validateHexInput(this)" maxlength="4">
+        <input id="memoryValue" type="text" placeholder="Wprowadź wartość HEX" oninput="validateHexInput(this)" maxlength="4">
     </div>
     <div>
         <h2>Symulacja instrukcji MOV</h2>
@@ -69,14 +66,14 @@
         <button onclick="mov('regDX', 'regAX')">MOV DX, AX</button>
         <button onclick="mov('regDX', 'regBX')">MOV DX, BX</button>
         <button onclick="mov('regDX', 'regCX')">MOV DX, CX</button>
-        <button onclick="movMemoryToRegister('memoryValue', 'regAX')">MOV Pamięć, AX</button>
-        <button onclick="movMemoryToRegister('memoryValue', 'regBX')">MOV Pamięć, BX</button>
-        <button onclick="movMemoryToRegister('memoryValue', 'regCX')">MOV Pamięć, CX</button>
-        <button onclick="movMemoryToRegister('memoryValue', 'regDX')">MOV Pamięć, DX</button>
-        <button onclick="movRegisterToMemory('regAX', 'memoryValue')">MOV AX, Pamięć</button>
-        <button onclick="movRegisterToMemory('regBX', 'memoryValue')">MOV BX, Pamięć</button>
-        <button onclick="movRegisterToMemory('regCX', 'memoryValue')">MOV CX, Pamięć</button>
-        <button onclick="movRegisterToMemory('regDX', 'memoryValue')">MOV DX, Pamięć</button>
+        <button id="memToAX" onclick="mov('regAX', 'memoryValue')"></button>
+        <button id="memToBX" onclick="mov('regBX', 'memoryValue')"></button>
+        <button id="memToCX" onclick="mov('regCX', 'memoryValue')"></button>
+        <button id="memToDX" onclick="mov('regDX', 'memoryValue')"></button>
+        <button id="axToMem" onclick="mov('memoryValue', 'regAX')"></button>
+        <button id="bxToMem" onclick="mov('memoryValue', 'regBX')"></button>
+        <button id="cxToMem" onclick="mov('memoryValue', 'regCX')"></button>
+        <button id="dxToMem" onclick="mov('memoryValue', 'regDX')"></button>
         <button onclick="movWithAddressingMode('BX', 'base')">MOV Baza</button>
         <button onclick="movWithAddressingMode('DI', 'index')">MOV Indeks</button>
         <button onclick="movWithAddressingMode('BX', 'baseIndex')">MOV Baza+Indeks</button>
@@ -115,7 +112,8 @@
             return value.padStart(4, '0').toUpperCase();
         }
         function validateHexInput(element) {
-            let value = element.value.toUpperCase().replace(/[^0-9A-F]/g, '');
+            const value = element.value.toUpperCase().replace(/[^0-9A-F]/g, '');
+            element.value = value;
             if (isHex(value)) {
                 element.value = normalizeHex(value);
                 setError(element.id, false);
@@ -123,16 +121,46 @@
                 element.value = '';  // Clear invalid value
                 setError(element.id, true);
             }
+            updateMemoryAddress();
+        }
+        function handleInputChange(element) {
+            validateHexInput(element);
         }
         function mov(to, from) {
             const fromValue = document.getElementById(from).value;
+            const toElement = document.getElementById(to);
             if (isHex(fromValue)) {
-                document.getElementById(to).value = normalizeHex(fromValue);
+                toElement.value = normalizeHex(fromValue);
                 setError(from, false);
                 setError(to, false);
             } else {
                 setError(from, true);
+                setError(to, true);
             }
+        }
+        function calculateMemoryAddress() {
+            const regBX = parseInt(document.getElementById('regBX').value, 16) || 0;
+            const regBP = parseInt(document.getElementById('regBP').value, 16) || 0;
+            const regDI = parseInt(document.getElementById('regDI').value, 16) || 0;
+            const regSI = parseInt(document.getElementById('regSI').value, 16) || 0;
+            const offset = parseInt(document.getElementById('offset').value, 16) || 0;
+            const address = normalizeHex((offset + regBX + regBP + regDI + regSI).toString(16));
+            return address;
+        }
+        function updateMemoryAddress() {
+            const address = calculateMemoryAddress();
+            document.getElementById('memoryAddress').value = address;
+            updateButtons(address);
+        }
+        function updateButtons(address) {
+            document.getElementById('memToAX').innerText = `MOV AX, [${address}]`;
+            document.getElementById('memToBX').innerText = `MOV BX, [${address}]`;
+            document.getElementById('memToCX').innerText = `MOV CX, [${address}]`;
+            document.getElementById('memToDX').innerText = `MOV DX, [${address}]`;
+            document.getElementById('axToMem').innerText = `MOV [${address}], AX`;
+            document.getElementById('bxToMem').innerText = `MOV [${address}], BX`;
+            document.getElementById('cxToMem').innerText = `MOV [${address}], CX`;
+            document.getElementById('dxToMem').innerText = `MOV [${address}], DX`;
         }
         function xchg(reg1, reg2) {
             const reg1Value = document.getElementById(reg1).value;
@@ -147,28 +175,8 @@
                 setError(reg2, !isHex(reg2Value));
             }
         }
-        function calculateMemoryAddress(mode) {
-            const regBX = parseInt(document.getElementById('regBX').value, 16) || 0;
-            const regBP = parseInt(document.getElementById('regBP').value, 16) || 0;
-            const regDI = parseInt(document.getElementById('regDI').value, 16) || 0;
-            const regSI = parseInt(document.getElementById('regSI').value, 16) || 0;
-            const offset = parseInt(document.getElementById('offset').value, 16) || 0;
-            let address = offset;
-            switch (mode) {
-                case 'base':
-                    address += regBX + regBP;
-                    break;
-                case 'index':
-                    address += regDI + regSI;
-                    break;
-                case 'baseIndex':
-                    address += (regBX + regBP) + (regDI + regSI);
-                    break;
-            }
-            return normalizeHex(address.toString(16));
-        }
         function movWithAddressingMode(register, mode) {
-            const memoryAddress = calculateMemoryAddress(mode);
+            const memoryAddress = calculateMemoryAddress();
             const registerValue = document.getElementById(`reg${register}`).value;
             if (isHex(registerValue)) {
                 document.getElementById('memoryAddress').value = memoryAddress;
@@ -178,6 +186,8 @@
                 setError('memoryValue', false);
             } else {
                 setError(`reg${register}`, true);
+                setError('memoryAddress', true);
+                setError('memoryValue', true);
             }
         }
         function resetRegisters() {
@@ -186,7 +196,11 @@
                 input.value = '';
                 setError(input.id, false);
             });
+            updateMemoryAddress();
         }
+        document.addEventListener('DOMContentLoaded', (event) => {
+            updateMemoryAddress();
+        });
     </script>
 </body>
 </html>

@@ -102,7 +102,9 @@
         }
         function setError(inputId, error) {
             const inputElement = document.getElementById(inputId);
-            if (error) {
+            const markedElements = document.querySelectorAll('.error');
+            markedElements.forEach(element => element.classList.remove('error'))
+            if (error && !inputElement.classList.contains('error')) {
                 inputElement.classList.add('error');
             } else {
                 inputElement.classList.remove('error');

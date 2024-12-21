@@ -5,8 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Symulator Procesora 8086</title>
     <style>
-        .error {
-            border: 2px solid red;
+        .error { border: 2px solid red; }
+        .stack {
+            width: 100px;
+            border: 1px solid #000;
+            display: flex;
+            flex-direction: column-reverse;
+            margin-top: 10px;
+        }
+        .stack div {
+            border-top: 1px solid #000;
+            padding: 5px;
+            text-align: center;
+        }
+        .empty {
+            color: #AAA;
+        }
+        .messages, .errors {
+            margin-top: 10px;
+        }
+        .messages div, .errors div {
+            padding: 5px;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -102,9 +125,30 @@
     <button id="xchgDXMem" onclick="xchg('memoryValue', 'regDX')">XCHG [Memory], DX</button>
 </div>
 <div>
-    <button onclick="resetRegisters()">Resetuj Rejestry</button>
+    <h2>Symulacja instrukcji PUSH i POP</h2>
+    <button onclick="push('regAX')">PUSH AX</button>
+    <button onclick="push('regBX')">PUSH BX</button>
+    <button onclick="push('regCX')">PUSH CX</button>
+    <button onclick="push('regDX')">PUSH DX</button>
+    <button onclick="pop('regAX')">POP AX</button>
+    <button onclick="pop('regBX')">POP BX</button>
+    <button onclick="pop('regCX')">POP CX</button>
+    <button onclick="pop('regDX')">POP DX</button>
 </div>
+<div>
+    <button onclick="resetRegisters()">Resetuj Rejestry</button>
+    <button onclick="resetMemory()">Resetuj pamięć</button>
+    <button onclick="resetStack()">Resetuj stos</button>
+</div>
+<div>
+    <h2>Stos</h2>
+    <div class="stack" id="stackVisual"></div>
+</div>
+<div class="messages" id="messages"></div>
+<div class="errors" id="errors"></div>
 <script>
+    let stack = [];
+    const MAX_STACK_SIZE = 16; // Maksymalny rozmiar stosu
     function isHex(value) {
         return /^[0-9A-Fa-f]{1,4}$/.test(value);
     }
@@ -127,7 +171,7 @@
         if (isHex(value)) {
             setError(element.id, false);
         } else {
-            element.value = '';  // Clear invalid value
+            element.value = ''; // Clear invalid value
             setError(element.id, true);
         }
         updateMemoryAddress();
@@ -139,6 +183,7 @@
     }
     function handleInputChange(element) {
         validateHexInput(element);
+        updateErrors('');
     }
     function mov(to, from) {
         const fromValue = document.getElementById(from).value;
@@ -222,9 +267,88 @@
             setError(input.id, false);
         });
         updateMemoryAddress();
+        updateStackVisual();
+        updateMessages();
     }
-    document.addEventListener('DOMContentLoaded', (event) => {
+    function resetMemory() {
+        document.getElementById('memoryValue').value = '';
         updateMemoryAddress();
+        updateMessages('Pamięć została zresetowana.');
+    }
+
+    function resetStack() {
+        stack = [];
+        updateStackVisual();
+        updateMessages('Stos został zresetowany.');
+    }
+    function updateStackVisual() {
+        const stackVisual = document.getElementById('stackVisual');
+        stackVisual.innerHTML = '';
+        if (stack.length === 0) {
+            const emptyMessage = document.createElement('div');
+            emptyMessage.classList.add('empty');
+            emptyMessage.textContent = 'Stos jest pusty';
+            stackVisual.appendChild(emptyMessage);
+        } else {
+            for (let i = stack.length - 1; i >= 0; i--) {
+                const stackElement = document.createElement('div');
+                stackElement.textContent = stack[i];
+                stackVisual.appendChild(stackElement);
+            }
+        }
+    }
+    function updateMessages(message = '') {
+        const messages = document.getElementById('messages');
+        messages.innerHTML = '';
+        if (message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messages.appendChild(messageElement);
+        }
+    }
+    function updateErrors(error = '') {
+        const errors = document.getElementById('errors');
+        errors.innerHTML = '';
+        if (error) {
+            const errorElement = document.createElement('div');
+            errorElement.classList.add('error-message');
+            errorElement.textContent = error;
+            errors.appendChild(errorElement);
+        }
+    }
+    function push(register) {
+        if (stack.length < MAX_STACK_SIZE) {
+            const registerValue = document.getElementById(register).value;``
+            if (isHex(registerValue)) {
+                stack.push(normalizeHex(registerValue));
+                updateMessages(`PUSH ${register.toUpperCase()} (0x${registerValue})`);
+                setError(register, false);
+                updateStackVisual();
+                updateErrors('');
+            } else {
+                setError(register, true);
+                updateErrors('Nieprawidłowa wartość w rejestrze.');
+            }
+        } else {
+            updateErrors('Stos jest pełny!');
+        }
+    }
+    function pop(register) {
+        if (stack.length > 0) {
+            const value = stack.pop();
+            document.getElementById(register).value = value;
+            updateMessages(`POP ${register.toUpperCase()} (0x${value})`);
+            setError(register, false);
+            updateStackVisual();
+            updateErrors('');
+        } else {
+            updateErrors('Stos jest pusty!');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', (_event) => {
+        updateMemoryAddress();
+        updateStackVisual();
     });
 </script>
 </body>

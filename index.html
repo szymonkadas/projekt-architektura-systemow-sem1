@@ -11,198 +11,221 @@
     </style>
 </head>
 <body>
-    <h1>Symulator Procesora 8086</h1>
-    <div>
-        <label for="regAX">Rejestr AX:</label>
-        <input id="regAX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
-    </div>
-    <div>
-        <label for="regBX">Rejestr BX:</label>
-        <input id="regBX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
-    </div>
-    <div>
-        <label for="regCX">Rejestr CX:</label>
-        <input id="regCX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
-    </div>
-    <div>
-        <label for="regDX">Rejestr DX:</label>
-        <input id="regDX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
-    </div>
-    <div>
-        <label for="regBP">Rejestr BP:</label>
-        <input id="regBP" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
-    </div>
-    <div>
-        <label for="regDI">Rejestr DI:</label>
-        <input id="regDI" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
-    </div>
-    <div>
-        <label for="regSI">Rejestr SI:</label>
-        <input id="regSI" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
-    </div>
-    <div>
-        <label for="offset">Offset:</label>
-        <input id="offset" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" maxlength="4">
-    </div>
-    <div>
-        <label for="memoryAddress">Adres pamięci:</label>
-        <input id="memoryAddress" type="text" placeholder="Wprowadź adres HEX" maxlength="4" readonly>
-    </div>
-    <div>
-        <label for="memoryValue">Wartość pamięci:</label>
-        <input id="memoryValue" type="text" placeholder="Wprowadź wartość HEX" oninput="validateHexInput(this)" maxlength="4">
-    </div>
-    <div>
-        <h2>Symulacja instrukcji MOV</h2>
-        <button onclick="mov('regAX', 'regBX')">MOV AX, BX</button>
-        <button onclick="mov('regAX', 'regCX')">MOV AX, CX</button>
-        <button onclick="mov('regAX', 'regDX')">MOV AX, DX</button>
-        <button onclick="mov('regBX', 'regAX')">MOV BX, AX</button>
-        <button onclick="mov('regBX', 'regCX')">MOV BX, CX</button>
-        <button onclick="mov('regBX', 'regDX')">MOV BX, DX</button>
-        <button onclick="mov('regCX', 'regAX')">MOV CX, AX</button>
-        <button onclick="mov('regCX', 'regBX')">MOV CX, BX</button>
-        <button onclick="mov('regCX', 'regDX')">MOV CX, DX</button>
-        <button onclick="mov('regDX', 'regAX')">MOV DX, AX</button>
-        <button onclick="mov('regDX', 'regBX')">MOV DX, BX</button>
-        <button onclick="mov('regDX', 'regCX')">MOV DX, CX</button>
-        <button id="memToAX" onclick="mov('regAX', 'memoryValue')"></button>
-        <button id="memToBX" onclick="mov('regBX', 'memoryValue')"></button>
-        <button id="memToCX" onclick="mov('regCX', 'memoryValue')"></button>
-        <button id="memToDX" onclick="mov('regDX', 'memoryValue')"></button>
-        <button id="axToMem" onclick="mov('memoryValue', 'regAX')"></button>
-        <button id="bxToMem" onclick="mov('memoryValue', 'regBX')"></button>
-        <button id="cxToMem" onclick="mov('memoryValue', 'regCX')"></button>
-        <button id="dxToMem" onclick="mov('memoryValue', 'regDX')"></button>
-        <button onclick="movWithAddressingMode('BX', 'base')">MOV Baza</button>
-        <button onclick="movWithAddressingMode('DI', 'index')">MOV Indeks</button>
-        <button onclick="movWithAddressingMode('BX', 'baseIndex')">MOV Baza+Indeks</button>
-    </div>
-    <div>
-        <h2>Symulacja instrukcji XCHG</h2>
-        <button onclick="xchg('regAX', 'regBX')">XCHG AX, BX</button>
-        <button onclick="xchg('regAX', 'regCX')">XCHG AX, CX</button>
-        <button onclick="xchg('regAX', 'regDX')">XCHG AX, DX</button>
-        <button onclick="xchg('regBX', 'regAX')">XCHG BX, AX</button>
-        <button onclick="xchg('regBX', 'regCX')">XCHG BX, CX</button>
-        <button onclick="xchg('regBX', 'regDX')">XCHG BX, DX</button>
-        <button onclick="xchg('regCX', 'regAX')">XCHG CX, AX</button>
-        <button onclick="xchg('regCX', 'regBX')">XCHG CX, BX</button>
-        <button onclick="xchg('regCX', 'regDX')">XCHG CX, DX</button>
-        <button onclick="xchg('regDX', 'regAX')">XCHG DX, AX</button>
-        <button onclick="xchg('regDX', 'regBX')">XCHG DX, BX</button>
-        <button onclick="xchg('regDX', 'regCX')">XCHG DX, CX</button>
-    </div>
-    <div>
-        <button onclick="resetRegisters()">Resetuj Rejestry</button>
-    </div>
-    <script>
-        function isHex(value) {
-            return /^[0-9A-Fa-f]{1,4}$/.test(value);
+<h1>Symulator Procesora 8086</h1>
+<div>
+    <label for="regAX">Rejestr AX:</label>
+    <input id="regAX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" onblur="normalizeOnBlur(this)" maxlength="4">
+</div>
+<div>
+    <label for="regBX">Rejestr BX:</label>
+    <input id="regBX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" onblur="normalizeOnBlur(this)" maxlength="4">
+</div>
+<div>
+    <label for="regCX">Rejestr CX:</label>
+    <input id="regCX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" onblur="normalizeOnBlur(this)" maxlength="4">
+</div>
+<div>
+    <label for="regDX">Rejestr DX:</label>
+    <input id="regDX" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" onblur="normalizeOnBlur(this)" maxlength="4">
+</div>
+<div>
+    <label for="regBP">Rejestr BP:</label>
+    <input id="regBP" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" onblur="normalizeOnBlur(this)" maxlength="4">
+</div>
+<div>
+    <label for="regDI">Rejestr DI:</label>
+    <input id="regDI" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" onblur="normalizeOnBlur(this)" maxlength="4">
+</div>
+<div>
+    <label for="regSI">Rejestr SI:</label>
+    <input id="regSI" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" onblur="normalizeOnBlur(this)" maxlength="4">
+</div>
+<div>
+    <label for="offset">Offset:</label>
+    <input id="offset" type="text" placeholder="Wprowadź wartość HEX" oninput="handleInputChange(this)" onblur="normalizeOnBlur(this)" maxlength="4">
+</div>
+<div>
+    <label for="memoryAddress">Adres pamięci:</label>
+    <input id="memoryAddress" type="text" placeholder="Wprowadź adres HEX" maxlength="4" readonly>
+</div>
+<div>
+    <label for="memoryValue">Wartość pamięci:</label>
+    <input id="memoryValue" type="text" placeholder="Wprowadź wartość HEX" oninput="validateHexInput(this)" onblur="normalizeOnBlur(this)" maxlength="4">
+</div>
+<div>
+    <h2>Symulacja instrukcji MOV</h2>
+    <button onclick="mov('regAX', 'regBX')">MOV AX, BX</button>
+    <button onclick="mov('regAX', 'regCX')">MOV AX, CX</button>
+    <button onclick="mov('regAX', 'regDX')">MOV AX, DX</button>
+    <button onclick="mov('regBX', 'regAX')">MOV BX, AX</button>
+    <button onclick="mov('regBX', 'regCX')">MOV BX, CX</button>
+    <button onclick="mov('regBX', 'regDX')">MOV BX, DX</button>
+    <button onclick="mov('regCX', 'regAX')">MOV CX, AX</button>
+    <button onclick="mov('regCX', 'regBX')">MOV CX, BX</button>
+    <button onclick="mov('regCX', 'regDX')">MOV CX, DX</button>
+    <button onclick="mov('regDX', 'regAX')">MOV DX, AX</button>
+    <button onclick="mov('regDX', 'regBX')">MOV DX, BX</button>
+    <button onclick="mov('regDX', 'regCX')">MOV DX, CX</button>
+    <button id="memToAX" onclick="mov('regAX', 'memoryValue')">MOV AX, [Memory]</button>
+    <button id="memToBX" onclick="mov('regBX', 'memoryValue')">MOV BX, [Memory]</button>
+    <button id="memToCX" onclick="mov('regCX', 'memoryValue')">MOV CX, [Memory]</button>
+    <button id="memToDX" onclick="mov('regDX', 'memoryValue')">MOV DX, [Memory]</button>
+    <button id="axToMem" onclick="mov('memoryValue', 'regAX')">MOV [Memory], AX</button>
+    <button id="bxToMem" onclick="mov('memoryValue', 'regBX')">MOV [Memory], BX</button>
+    <button id="cxToMem" onclick="mov('memoryValue', 'regCX')">MOV [Memory], CX</button>
+    <button id="dxToMem" onclick="mov('memoryValue', 'regDX')">MOV [Memory], DX</button>
+    <button onclick="movWithAddressingMode('BX', 'base')">MOV Baza</button>
+    <button onclick="movWithAddressingMode('DI', 'index')">MOV Indeks</button>
+    <button onclick="movWithAddressingMode('BX', 'baseIndex')">MOV Baza+Indeks</button>
+</div>
+<div>
+    <h2>Symulacja instrukcji XCHG</h2>
+    <button onclick="xchg('regAX', 'regBX')">XCHG AX, BX</button>
+    <button onclick="xchg('regAX', 'regCX')">XCHG AX, CX</button>
+    <button onclick="xchg('regAX', 'regDX')">XCHG AX, DX</button>
+    <button onclick="xchg('regBX', 'regAX')">XCHG BX, AX</button>
+    <button onclick="xchg('regBX', 'regCX')">XCHG BX, CX</button>
+    <button onclick="xchg('regBX', 'regDX')">XCHG BX, DX</button>
+    <button onclick="xchg('regCX', 'regAX')">XCHG CX, AX</button>
+    <button onclick="xchg('regCX', 'regBX')">XCHG CX, BX</button>
+    <button onclick="xchg('regCX', 'regDX')">XCHG CX, DX</button>
+    <button onclick="xchg('regDX', 'regAX')">XCHG DX, AX</button>
+    <button onclick="xchg('regDX', 'regBX')">XCHG DX, BX</button>
+    <button onclick="xchg('regDX', 'regCX')">XCHG DX, CX</button>
+    <button id="xchgMemAX" onclick="xchg('regAX', 'memoryValue')">XCHG AX, [Memory]</button>
+    <button id="xchgMemBX" onclick="xchg('regBX', 'memoryValue')">XCHG BX, [Memory]</button>
+    <button id="xchgMemCX" onclick="xchg('regCX', 'memoryValue')">XCHG CX, [Memory]</button>
+    <button id="xchgMemDX" onclick="xchg('regDX', 'memoryValue')">XCHG DX, [Memory]</button>
+    <button id="xchgAXMem" onclick="xchg('memoryValue', 'regAX')">XCHG [Memory], AX</button>
+    <button id="xchgBXMem" onclick="xchg('memoryValue', 'regBX')">XCHG [Memory], BX</button>
+    <button id="xchgCXMem" onclick="xchg('memoryValue', 'regCX')">XCHG [Memory], CX</button>
+    <button id="xchgDXMem" onclick="xchg('memoryValue', 'regDX')">XCHG [Memory], DX</button>
+</div>
+<div>
+    <button onclick="resetRegisters()">Resetuj Rejestry</button>
+</div>
+<script>
+    function isHex(value) {
+        return /^[0-9A-Fa-f]{1,4}$/.test(value);
+    }
+    function setError(inputId, error) {
+        const inputElement = document.getElementById(inputId);
+        const markedElements = document.querySelectorAll('.error');
+        markedElements.forEach(element => element.classList.remove('error'));
+        if (error && !inputElement.classList.contains('error')) {
+            inputElement.classList.add('error');
+        } else {
+            inputElement.classList.remove('error');
         }
-        function setError(inputId, error) {
-            const inputElement = document.getElementById(inputId);
-            const markedElements = document.querySelectorAll('.error');
-            markedElements.forEach(element => element.classList.remove('error'))
-            if (error && !inputElement.classList.contains('error')) {
-                inputElement.classList.add('error');
-            } else {
-                inputElement.classList.remove('error');
-            }
+    }
+    function normalizeHex(value) {
+        return value.padStart(4, '0').toUpperCase();
+    }
+    function validateHexInput(element) {
+        const value = element.value.toUpperCase().replace(/[^0-9A-F]/g, '');
+        element.value = value;
+        if (isHex(value)) {
+            setError(element.id, false);
+        } else {
+            element.value = '';  // Clear invalid value
+            setError(element.id, true);
         }
-        function normalizeHex(value) {
-            return value.padStart(4, '0').toUpperCase();
+        updateMemoryAddress();
+    }
+    function normalizeOnBlur(element) {
+        if (isHex(element.value)) {
+            element.value = normalizeHex(element.value);
         }
-        function validateHexInput(element) {
-            const value = element.value.toUpperCase().replace(/[^0-9A-F]/g, '');
-            element.value = value;
-            if (isHex(value)) {
-                element.value = normalizeHex(value);
-                setError(element.id, false);
-            } else {
-                element.value = '';  // Clear invalid value
-                setError(element.id, true);
-            }
-            updateMemoryAddress();
+    }
+    function handleInputChange(element) {
+        validateHexInput(element);
+    }
+    function mov(to, from) {
+        const fromValue = document.getElementById(from).value;
+        const toElement = document.getElementById(to);
+        if (isHex(fromValue)) {
+            toElement.value = normalizeHex(fromValue);
+            setError(from, false);
+            setError(to, false);
+        } else {
+            setError(from, true);
+            setError(to, true);
         }
-        function handleInputChange(element) {
-            validateHexInput(element);
+    }
+    function calculateMemoryAddress() {
+        const regBX = parseInt(document.getElementById('regBX').value, 16) || 0;
+        const regBP = parseInt(document.getElementById('regBP').value, 16) || 0;
+        const regDI = parseInt(document.getElementById('regDI').value, 16) || 0;
+        const regSI = parseInt(document.getElementById('regSI').value, 16) || 0;
+        const offset = parseInt(document.getElementById('offset').value, 16) || 0;
+        const address = normalizeHex((offset + regBX + regBP + regDI + regSI).toString(16));
+        return address;
+    }
+    function updateMemoryAddress() {
+        const address = calculateMemoryAddress();
+        document.getElementById('memoryAddress').value = address;
+        updateButtons(address);
+        updateXchgButtons(address);
+    }
+    function updateButtons(address) {
+        document.getElementById('memToAX').innerText = `MOV AX, [${address}]`;
+        document.getElementById('memToBX').innerText = `MOV BX, [${address}]`;
+        document.getElementById('memToCX').innerText = `MOV CX, [${address}]`;
+        document.getElementById('memToDX').innerText = `MOV DX, [${address}]`;
+        document.getElementById('axToMem').innerText = `MOV [${address}], AX`;
+        document.getElementById('bxToMem').innerText = `MOV [${address}], BX`;
+        document.getElementById('cxToMem').innerText = `MOV [${address}], CX`;
+        document.getElementById('dxToMem').innerText = `MOV [${address}], DX`;
+    }
+    function updateXchgButtons(address) {
+        document.getElementById('xchgMemAX').innerText = `XCHG AX, [${address}]`;
+        document.getElementById('xchgMemBX').innerText = `XCHG BX, [${address}]`;
+        document.getElementById('xchgMemCX').innerText = `XCHG CX, [${address}]`;
+        document.getElementById('xchgMemDX').innerText = `XCHG DX, [${address}]`;
+        document.getElementById('xchgAXMem').innerText = `XCHG [${address}], AX`;
+        document.getElementById('xchgBXMem').innerText = `XCHG [${address}], BX`;
+        document.getElementById('xchgCXMem').innerText = `XCHG [${address}], CX`;
+        document.getElementById('xchgDXMem').innerText = `XCHG [${address}], DX`;
+    }
+    function xchg(reg1, reg2) {
+        const reg1Value = document.getElementById(reg1).value;
+        const reg2Value = document.getElementById(reg2).value;
+        if (isHex(reg1Value) && isHex(reg2Value)) {
+            document.getElementById(reg1).value = normalizeHex(reg2Value);
+            document.getElementById(reg2).value = normalizeHex(reg1Value);
+            setError(reg1, false);
+            setError(reg2, false);
+        } else {
+            setError(reg1, !isHex(reg1Value));
+            setError(reg2, !isHex(reg2Value));
         }
-        function mov(to, from) {
-            const fromValue = document.getElementById(from).value;
-            const toElement = document.getElementById(to);
-            if (isHex(fromValue)) {
-                toElement.value = normalizeHex(fromValue);
-                setError(from, false);
-                setError(to, false);
-            } else {
-                setError(from, true);
-                setError(to, true);
-            }
+    }
+    function movWithAddressingMode(register, mode) {
+        const memoryAddress = calculateMemoryAddress();
+        const registerValue = document.getElementById(`reg${register}`).value;
+        if (isHex(registerValue)) {
+            document.getElementById('memoryAddress').value = memoryAddress;
+            document.getElementById('memoryValue').value = normalizeHex(registerValue);
+            setError(`reg${register}`, false);
+            setError('memoryAddress', false);
+            setError('memoryValue', false);
+        } else {
+            setError(`reg${register}`, true);
+            setError('memoryAddress', true);
+            setError('memoryValue', true);
         }
-        function calculateMemoryAddress() {
-            const regBX = parseInt(document.getElementById('regBX').value, 16) || 0;
-            const regBP = parseInt(document.getElementById('regBP').value, 16) || 0;
-            const regDI = parseInt(document.getElementById('regDI').value, 16) || 0;
-            const regSI = parseInt(document.getElementById('regSI').value, 16) || 0;
-            const offset = parseInt(document.getElementById('offset').value, 16) || 0;
-            const address = normalizeHex((offset + regBX + regBP + regDI + regSI).toString(16));
-            return address;
-        }
-        function updateMemoryAddress() {
-            const address = calculateMemoryAddress();
-            document.getElementById('memoryAddress').value = address;
-            updateButtons(address);
-        }
-        function updateButtons(address) {
-            document.getElementById('memToAX').innerText = `MOV AX, [${address}]`;
-            document.getElementById('memToBX').innerText = `MOV BX, [${address}]`;
-            document.getElementById('memToCX').innerText = `MOV CX, [${address}]`;
-            document.getElementById('memToDX').innerText = `MOV DX, [${address}]`;
-            document.getElementById('axToMem').innerText = `MOV [${address}], AX`;
-            document.getElementById('bxToMem').innerText = `MOV [${address}], BX`;
-            document.getElementById('cxToMem').innerText = `MOV [${address}], CX`;
-            document.getElementById('dxToMem').innerText = `MOV [${address}], DX`;
-        }
-        function xchg(reg1, reg2) {
-            const reg1Value = document.getElementById(reg1).value;
-            const reg2Value = document.getElementById(reg2).value;
-            if (isHex(reg1Value) && isHex(reg2Value)) {
-                document.getElementById(reg1).value = normalizeHex(reg2Value);
-                document.getElementById(reg2).value = normalizeHex(reg1Value);
-                setError(reg1, false);
-                setError(reg2, false);
-            } else {
-                setError(reg1, !isHex(reg1Value));
-                setError(reg2, !isHex(reg2Value));
-            }
-        }
-        function movWithAddressingMode(register, mode) {
-            const memoryAddress = calculateMemoryAddress();
-            const registerValue = document.getElementById(`reg${register}`).value;
-            if (isHex(registerValue)) {
-                document.getElementById('memoryAddress').value = memoryAddress;
-                document.getElementById('memoryValue').value = normalizeHex(registerValue);
-                setError(`reg${register}`, false);
-                setError('memoryAddress', false);
-                setError('memoryValue', false);
-            } else {
-                setError(`reg${register}`, true);
-                setError('memoryAddress', true);
-                setError('memoryValue', true);
-            }
-        }
-        function resetRegisters() {
-            const inputs = document.querySelectorAll('input[type="text"]');
-            inputs.forEach(input => {
-                input.value = '';
-                setError(input.id, false);
-            });
-            updateMemoryAddress();
-        }
-        document.addEventListener('DOMContentLoaded', (event) => {
-            updateMemoryAddress();
+    }
+    function resetRegisters() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(input => {
+            input.value = '';
+            setError(input.id, false);
         });
-    </script>
+        updateMemoryAddress();
+    }
+    document.addEventListener('DOMContentLoaded', (event) => {
+        updateMemoryAddress();
+    });
+</script>
 </body>
 </html>

@@ -110,12 +110,10 @@ Pamięć operacyjna w procesorze 8086 umożliwia przechowywanie i odczyt danych 
 
   - **Działanie stosu:** Stos w procesorze 8086 działa w pamięci segmentowej. Segment stosu jest określany przez rejestr SS (Stack Segment), a rejestr SP przechowuje offset w segmencie. Gdy dane są umieszczane na stosie (PUSH), wskaźnik SP przesuwa się w dół pamięci (do niższych adresów), a gdy dane są pobierane (POP), przesuwa się w górę (do wyższych adresów).
 
-  - Dodatkowo: Symulacja rozkazów PUSH i POP w odniesieniu do rejestrów AX, BX, CX i DX.
-
 #### Architektura Strony:
 
 - Warstwa wizualna oparta jest na HTML + CSS.
-- Logika wypełniana funkcjami w JavaScript.
+- Logika zrealizowana jest funkcjami w JavaScript. Zapewnia to interaktywność rozwiązania.
 
 #### Jak uruchomić:
 

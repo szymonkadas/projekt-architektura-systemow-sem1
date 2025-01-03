@@ -5,16 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Symulator Procesora 8086</title>
     <style>
-        .error { border: 2px solid red; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 20px;
+            padding: 0;
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        div {
+            margin-bottom: 20px;
+        }
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+        }
+        input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+        }
+        input:focus {
+            border-color: #0056b3;
+            outline: none;
+        }
+        .error input {
+            border-color: red;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            background-color: #0056b3;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #003d80;
+        }
         .stack {
-            width: 100px;
-            border: 1px solid #000;
+            background-color: white;
+            width: 120px;
+            border: 1px solid #ccc;
             display: flex;
             flex-direction: column-reverse;
             margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
         }
         .stack div {
-            border-top: 1px solid #000;
+            border-top: 1px solid #ccc;
             padding: 5px;
             text-align: center;
         }
@@ -22,10 +67,15 @@
             color: #AAA;
         }
         .messages, .errors {
-            margin-top: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            max-width: 500px;
         }
         .messages div, .errors div {
             padding: 5px;
+            margin-bottom: 5px;
         }
         .error-message {
             color: red;
@@ -144,7 +194,9 @@
     <h2>Stos</h2>
     <div class="stack" id="stackVisual"></div>
 </div>
+<h2>Komunikaty</h2>
 <div class="messages" id="messages"></div>
+<h2>Komunikaty błędu</h2>
 <div class="errors" id="errors"></div>
 <script>
     let stack = [];
